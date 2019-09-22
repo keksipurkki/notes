@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:syntax": "tsc -p .",
     "build": "rollup -c",
     "watch": "rollup -cw",
     "lint": "eslint --ext='.ts,.tsx' src"

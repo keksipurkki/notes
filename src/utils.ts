@@ -10,17 +10,17 @@ export const nil: NilTodo = Object.freeze({
   type: "Nil"
 });
 
-export function isTodo(todo: Maybe<TodoNote>): todo is TodoNote {
+export function isTodo(todo: Maybe<Todo>): todo is Todo {
   return todo !== nil;
 }
 
-export function canMarkDone(todo: Maybe<TodoNote>) {
+export function canMarkDone(todo: Maybe<Todo>) {
   const acceptable = ["Editing", "NotDone"];
   const type = todo.type as string;
   return acceptable.includes(type);
 }
 
-export function parse(todo: TodoNote) {
+export function parse(todo: Todo) {
   const [title, details] = todo.content.split(/\n+/);
   return {
     title: title || "New Note",
@@ -28,7 +28,7 @@ export function parse(todo: TodoNote) {
   };
 }
 
-export function timestamp(todo: TodoNote) {
+export function timestamp(todo: Todo) {
   const created = new Date(todo.createdAt);
   const now = new Date();
   if (now.toDateString() == created.toDateString()) {

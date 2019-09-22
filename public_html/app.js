@@ -2943,7 +2943,7 @@
 	}
 	function connect(selector) {
 	    return _connect(selector || null, dispatch => ({
-	        emit: bindActionCreators(Actions, dispatch),
+	        dispatch: bindActionCreators(Actions, dispatch),
 	    }));
 	}
 
@@ -4455,30 +4455,27 @@
 	    return (React.createElement("nav", { className: "pa3" },
 	        React.createElement("div", { className: "flex flex-row items-start" }, children)));
 	};
-	const Todos = ({ emit, todos, selected }) => {
-	    return (React.createElement("div", { className: "flex flex-auto flex-row items-stretch" },
-	        React.createElement(TodoMenu, { tabIndex: 1, todos: todos }, todo => (React.createElement(TodoMenu.Item, { selected: todo == selected, todo: todo, onClick: () => todo !== selected && emit.select(todo) }))),
-	        React.createElement(TodoEditor, { tabIndex: 2, todo: selected, onStopEdit: () => {
-	                emit.unmark(selected);
-	            }, onEdit: (content) => {
-	                emit.edit(selected, { content });
-	            } })));
-	};
-	const Screen = ({ emit, selected, todos }) => {
+	const Screen = ({ dispatch, selected, todos }) => {
 	    const markable = canMarkDone(selected);
-	    const markAction = markable ? emit.markDone : emit.unmark;
+	    const markAction = markable ? dispatch.markDone : dispatch.unmark;
 	    return (React.createElement(React.Fragment, null,
 	        React.createElement(Toolbar, null,
 	            React.createElement(Icon, { name: "Compose", title: "Create a note", onClick: () => {
-	                    emit.create();
+	                    dispatch.create();
 	                } }),
 	            React.createElement(Icon, { name: markable ? "Check" : "Refresh", title: markable ? "Mark as done" : "Undo", disabled: !selected.content, onClick: () => {
 	                    markAction(selected);
 	                } }),
 	            React.createElement(Icon, { name: "Trash", title: "Remove a note", disabled: !isTodo(selected), onClick: () => {
-	                    emit.removeTodo(selected);
+	                    dispatch.removeTodo(selected);
 	                } })),
-	        React.createElement(Todos, { todos: todos, selected: selected, emit: emit })));
+	        React.createElement("div", { className: "flex flex-auto flex-row items-stretch" },
+	            React.createElement(TodoMenu, { tabIndex: 1, todos: todos }, todo => (React.createElement(TodoMenu.Item, { selected: todo == selected, todo: todo, onClick: () => todo !== selected && dispatch.select(todo) }))),
+	            React.createElement(TodoEditor, { tabIndex: 2, todo: selected, onStopEdit: () => {
+	                    dispatch.unmark(selected);
+	                }, onEdit: (content) => {
+	                    dispatch.edit(selected, { content });
+	                } }))));
 	};
 	var Screen$1 = connect(props)(Screen);
 

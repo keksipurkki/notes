@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useFocus } from "./Effects";
-import { isTodo } from "./utils";
+import { isTodo } from "../utils";
 
 interface Props extends React.HTMLProps<HTMLTextAreaElement> {
-  todo: Maybe<TodoNote>;
+  todo: Maybe<Todo>;
   onEdit(content: string): void;
   onStopEdit(): void;
 }

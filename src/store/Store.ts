@@ -6,11 +6,11 @@ import middlewares from "./Middlewares";
 /* Redux types */
 type ActionType = keyof typeof actionTypes;
 type ActionCreators = typeof actionCreators;
-type ActionEmitter = { emit: ActionCreators };
+type ActionDispatcher = { dispatch: ActionCreators };
 type ActionUnion = ReturnType<ActionCreators[keyof ActionCreators]>;
 type Action<T = ActionType> = Defined<Filter<ActionUnion, { type: T }>>;
 
-export { Action, ActionEmitter, ActionCreators, AppState };
+export { Action, ActionDispatcher, ActionCreators, AppState };
 
 /* Store facade */
 import { connect as _connect, Provider, MapStateToProps } from "react-redux";
@@ -26,7 +26,7 @@ function configureStore() {
 
 function connect<S, O = {}>(selector?: Selector<S, O>) {
   return _connect(selector || null, dispatch => ({
-    emit: bindActionCreators(actionCreators, dispatch),
+    dispatch: bindActionCreators(actionCreators, dispatch),
   }));
 }
 

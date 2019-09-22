@@ -1,14 +1,14 @@
 import { Reducer } from "redux";
 import { Action } from "./Store";
-import { isTodo, nil } from "./utils";
+import { isTodo, nil } from "../utils";
 
 interface AppState {
-  map: { [uuid: string]: TodoNote };
-  selected: Maybe<TodoNote>;
-  todos: TodoNote[];
+  map: { [uuid: string]: Todo };
+  selected: Maybe<Todo>;
+  todos: Todo[];
 }
 
-function todoOrder(a: TodoNote, b: TodoNote) {
+function todoOrder(a: Todo, b: Todo) {
   const aAt = new Date(a.modifiedAt);
   const bAt = new Date(b.modifiedAt);
   return bAt.getTime() - aAt.getTime();

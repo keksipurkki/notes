@@ -1,11 +1,11 @@
-import { uuidv4, isTodo } from "./utils";
+import { uuidv4, isTodo } from "../utils";
 
 export const NEW_TODO = "NEW_TODO";
 export const EDIT_TODO = "EDIT_TODO";
 export const SELECT_TODO = "SELECT_TODO";
 export const REMOVE_TODO = "REMOVE_TODO";
 
-function newTodo(): TodoNote {
+function newTodo(): Todo {
   const now = new Date().toISOString();
   return {
     type: "New",
@@ -16,7 +16,7 @@ function newTodo(): TodoNote {
   };
 }
 
-function editedTodo(todo: Maybe<TodoNote>, update: Partial<TodoNote>): Maybe<TodoNote> {
+function editedTodo(todo: Maybe<Todo>, update: Partial<Todo>): Maybe<Todo> {
   const now = new Date().toISOString();
   const type = update.type || "Editing";
   if (isTodo(todo)) {
@@ -37,11 +37,11 @@ function action<T extends string, P, M = {}>(type: T, payload?: P, meta?: M) {
 
 const Actions = {
   create: () => action(NEW_TODO, newTodo()),
-  select: (todo: TodoNote) => action(SELECT_TODO, todo),
-  edit: (todo: Maybe<TodoNote>, update: Partial<TodoNote>) => action(EDIT_TODO, editedTodo(todo, update)),
-  removeTodo: (todo: Maybe<TodoNote>) => action(REMOVE_TODO, todo),
-  markDone: (todo: Maybe<TodoNote>) => Actions.edit(todo, { type: "Done" }),
-  unmark: (todo: Maybe<TodoNote>) => Actions.edit(todo, { type: "NotDone" })
+  select: (todo: Todo) => action(SELECT_TODO, todo),
+  edit: (todo: Maybe<Todo>, update: Partial<Todo>) => action(EDIT_TODO, editedTodo(todo, update)),
+  removeTodo: (todo: Maybe<Todo>) => action(REMOVE_TODO, todo),
+  markDone: (todo: Maybe<Todo>) => Actions.edit(todo, { type: "Done" }),
+  unmark: (todo: Maybe<Todo>) => Actions.edit(todo, { type: "NotDone" })
 };
 
 export default Actions;

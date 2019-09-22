@@ -1,14 +1,14 @@
 import * as React from "react";
 import FlipMove from "react-flip-move";
-import { parse, timestamp, isTodo } from "./utils";
+import { parse, timestamp, isTodo } from "../utils";
 
 interface Props extends React.HTMLProps<HTMLUListElement>{
-  todos: TodoNote[];
-  children: React.FC<TodoNote>;
+  todos: Todo[];
+  children: React.FC<Todo>;
 }
 
 interface ItemProps extends React.HTMLProps<HTMLAnchorElement> {
-  todo: TodoNote;
+  todo: Todo;
 }
 
 interface StaticProps {

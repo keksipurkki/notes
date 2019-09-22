@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider, configureStore } from "./Store";
-import Screen from "./TodosScreen";
+import Screen from "./Screen";
 
 const AppShell: React.FC = ({ children }) => (
   <main className="flex flex-row items-stretch">

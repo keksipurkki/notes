@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect, AppState, ActionEmitter } from "./Store";
-import Menu from "./TodoMenu";
-import Editor from "./TodoEditor";
+import Menu from "./Menu";
+import Editor from "./Editor";
 import Icon from "./Icons";
 import { isTodo, canMarkDone } from "./utils";
 

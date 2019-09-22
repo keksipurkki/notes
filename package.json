@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "aws s3 sync public_html s3://demo.keksipurkki.net --delete --acl public-read",
     "lint:syntax": "tsc -p .",
     "build": "rollup -c",
     "watch": "rollup -cw",

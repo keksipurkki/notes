@@ -1,0 +1,127 @@
+:root {
+}
+
+/*  BEGIN: Tachyon extensions */
+.b--light-silver-o {
+  border-color: rgba(170, 170, 170, 0.4);
+}
+
+.h-resizable {
+  resize: horizontal;
+  overflow: auto;
+}
+
+.no-resizable {
+  resize: none;
+  overflow: auto;
+}
+
+.flex-v-margin-align {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* END: Tachyon extensions */
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+a:visited {
+  color: currentColor;
+}
+
+main {
+  height: 100vh;
+}
+
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  padding: 0px;
+}
+
+/* Prevent zooming on tap */
+body {
+  touch-action: manipulation;
+}
+
+[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.2;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.push-btn {
+  cursor: pointer;
+}
+
+.push-btn {
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.push-btn:active {
+  background-color: rgba(50%, 50%, 50%, 0.1);
+}
+
+.push-btn img {
+  display: block;
+  max-width: 32px;
+  max-height: 18px;
+  width: auto;
+  height: auto;
+}
+
+.push-btn {
+  outline: none;
+  background-color: white;
+  border: 1px solid rgba(50%, 50%, 50%, 0.5);
+}
+
+.push-btn + .push-btn {
+  margin-left: 2px;
+}
+
+:focus {
+  outline: 0 none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+}
+
+.todo-item.done, textarea[readonly] {
+  text-decoration: line-through;
+}
+
+.todo-list:focus .todo-item.selected {
+  background-color: rgba(253, 227, 109, 0.7);
+}
+
+.todo-item.selected {
+  background-color: rgba(170, 170, 170, 0.3);
+}

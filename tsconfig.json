@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "lib": ["dom"],
+    "jsx": "react",
+    "sourceMap": false,
+    "strict": true,
+    "noUnusedLocals": true
+  }
+}
+

@@ -1,6 +1,6 @@
 import * as React from "react";
 import FlipMove from "react-flip-move";
-import { parse, timestamp, isTodo } from "../utils";
+import utils from "../utils";
 
 interface Props extends React.HTMLProps<HTMLUListElement>{
   todos: Todo[];
@@ -16,7 +16,7 @@ interface StaticProps {
 }
 
 const TodoMenuItem: React.FC<ItemProps> = ({ selected, onClick, todo }) => {
-  const { title, details } = parse(todo);
+  const { title, details } = utils.todo.parse(todo);
   const state = todo.type.toLowerCase();
   return (
     <a
@@ -27,7 +27,7 @@ const TodoMenuItem: React.FC<ItemProps> = ({ selected, onClick, todo }) => {
       <div className="noselect flex-auto f6 ph3 pv2 bb b--light-silver-o">
         <strong className="db mv1">{title}</strong>
         <p className="mv1 truncate">
-          {timestamp(todo)}&nbsp;
+          {utils.todo.timestamp(todo)}&nbsp;
           <span className="fw3">{details}</span>
         </p>
       </div>
@@ -47,7 +47,7 @@ const TodoMenu: React.FC<Props> & StaticProps = ({ children, todos, ...props }) 
         enterAnimation="accordionVertical"
         typeName={null}
       >
-        {todos.filter(isTodo).map(todo => (
+        {todos.filter(utils.todo.isTodo).map(todo => (
           <li key={todo.id}>{children(todo)}</li>
         ))}
       </FlipMove>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useFocus } from "./Effects";
-import { isTodo } from "../utils";
+import utils from "../utils";
 
 interface Props extends React.HTMLProps<HTMLTextAreaElement> {
   todo: Maybe<Todo>;
@@ -46,7 +46,7 @@ const TodoEditor: React.FC<Props> = ({ todo, onStopEdit, onEdit, tabIndex }) => 
     onEdit(textarea.value);
   };
 
-  const Content = isTodo(todo) ? Editor : Empty;
+  const Content = utils.todo.isTodo(todo) ? Editor : Empty;
 
   return (
     <div tabIndex={tabIndex} className="flex flex-column flex-auto">

@@ -1,18 +1,18 @@
 import * as React from "react";
-import { connect, AppState, ActionDispatcher } from "../store/Store";
+import { connect, selectors, ActionDispatcher } from "../store/Store";
+import utils from "../utils";
 import Menu from "./Menu";
 import Editor from "./Editor";
 import Icon from "./Icons";
-import { isTodo, canMarkDone } from "../utils";
 
 interface Props extends ActionDispatcher {
   todos: Todo[];
   selected: Maybe<Todo>;
 }
 
-const props = ({ todos, selected }: AppState) => {
-  return { todos, selected };
-};
+function props(state: AppState) {
+  return { todos: selectors.todos(state), selected: selectors.selected(state) };
+}
 
 const Toolbar: React.FC = ({ children }) => {
   return (
@@ -22,8 +22,23 @@ const Toolbar: React.FC = ({ children }) => {
   );
 };
 
+interface SplitProps {
+  leading: React.ReactElement;
+  trailing: React.ReactElement;
+  direction: "horizontal" | "vertical";
+}
+
+const Split: React.FC<SplitProps> = ({ leading, trailing }) => {
+  return (
+    <div className="flex flex-auto flex-row items-stretch">
+      {leading}
+      {trailing}
+    </div>
+  );
+};
+
 const Screen: React.FC<Props> = ({ dispatch, selected, todos }) => {
-  const markable = canMarkDone(selected);
+  const markable = utils.todo.canMarkDone(selected);
   const markAction = markable ? dispatch.markDone : dispatch.unmark;
   return (
     <>
@@ -46,33 +61,38 @@ const Screen: React.FC<Props> = ({ dispatch, selected, todos }) => {
         <Icon
           name="Trash"
           title="Remove a note"
-          disabled={!isTodo(selected)}
+          disabled={!utils.todo.isTodo(selected)}
           onClick={() => {
             dispatch.removeTodo(selected);
           }}
         />
       </Toolbar>
-      <div className="flex flex-auto flex-row items-stretch">
-        <Menu tabIndex={1} todos={todos}>
-          {todo => (
-            <Menu.Item
-              selected={todo == selected}
-              todo={todo}
-              onClick={() => todo !== selected && dispatch.select(todo)}
-            />
-          )}
-        </Menu>
-        <Editor
-          tabIndex={2}
-          todo={selected}
-          onStopEdit={() => {
-            dispatch.unmark(selected);
-          }}
-          onEdit={(content: string) => {
-            dispatch.edit(selected, { content });
-          }}
-        ></Editor>
-      </div>
+      <Split
+        direction="horizontal"
+        leading={
+          <Menu tabIndex={1} todos={todos}>
+            {todo => (
+              <Menu.Item
+                selected={todo == selected}
+                todo={todo}
+                onClick={() => todo !== selected && dispatch.select(todo)}
+              />
+            )}
+          </Menu>
+        }
+        trailing={
+          <Editor
+            tabIndex={2}
+            todo={selected}
+            onStopEdit={() => {
+              dispatch.unmark(selected);
+            }}
+            onEdit={(content: string) => {
+              dispatch.edit(selected, { content });
+            }}
+          />
+        }
+      />
     </>
   );
 };
